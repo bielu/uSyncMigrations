@@ -19,16 +19,16 @@ namespace uSync.Migrations.Core.Handlers.Seven;
     SourceFolderName = "Languages", TargetFolderName = "Languages")]
 internal class LanguageMigrationHandler : SharedHandlerBase<Language>, ISyncMigrationHandler
 {
-    private readonly ILocalizationService _localizationService;
+    private readonly ILanguageService _languageService;
 
     public LanguageMigrationHandler(
         IEventAggregator eventAggregator,
         ISyncMigrationFileService migrationFileService,
-        ILocalizationService localizationService,
+        ILanguageService languageService,
         ILogger<LanguageMigrationHandler> logger)
         : base(eventAggregator, migrationFileService, logger)
     {
-        _localizationService = localizationService;
+        _languageService = languageService;
     }
 
     protected override (string alias, Guid key) GetAliasAndKey(XElement source, SyncMigrationContext? context)
@@ -41,7 +41,7 @@ internal class LanguageMigrationHandler : SharedHandlerBase<Language>, ISyncMigr
     {
         var (alias, key) = GetAliasAndKey(source, context);
 
-        var existing = _localizationService.GetLanguageByIsoCode(alias);
+        var existing = _languageService.GetAsync(alias).Result;
 
         var target = new XElement("Language",
             new XAttribute(uSyncConstants.Xml.Key, key),

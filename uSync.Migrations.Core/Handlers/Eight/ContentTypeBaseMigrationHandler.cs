@@ -2,7 +2,6 @@
 
 using Microsoft.Extensions.Logging;
 
-using NUglify.Helpers;
 
 using Umbraco.Cms.Core.Events;
 using Umbraco.Cms.Core.Models;

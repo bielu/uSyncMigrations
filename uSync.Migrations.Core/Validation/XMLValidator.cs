@@ -15,9 +15,9 @@ using uSync.Migrations.Core.Services;
 namespace uSync.Migrations.Core.Validation;
 internal class XMLValidator : ISyncMigrationValidator
 {
-    private readonly SyncFileService _fileService;
+    private readonly ISyncFileService _fileService;
 
-    public XMLValidator(SyncFileService fileService)
+    public XMLValidator(ISyncFileService fileService)
     {
         _fileService = fileService;
     }

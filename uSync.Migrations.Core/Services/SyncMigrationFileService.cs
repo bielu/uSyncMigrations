@@ -7,6 +7,7 @@ using Umbraco.Cms.Core.Extensions;
 
 using uSync.BackOffice;
 using uSync.BackOffice.Configuration;
+using uSync.BackOffice.Models;
 using uSync.BackOffice.Services;
 using uSync.Core;
 using uSync.Migrations.Core.Helpers;
@@ -20,9 +21,9 @@ internal class SyncMigrationFileService : ISyncMigrationFileService
 {
     private readonly IWebHostEnvironment _webHostEnvironment;
     private readonly string _migrationRoot;
-    private readonly uSyncService _uSyncService;
-    private readonly SyncFileService _syncFileService;
-    private readonly uSyncConfigService _uSyncConfig;
+    private readonly ISyncService _uSyncService;
+    private readonly ISyncFileService _syncFileService;
+    private readonly uSyncOptions _uSyncConfig;
     private readonly string _uSyncRoot;
 
     private readonly ISyncMigrationStatusService _migrationStatusService;
@@ -30,9 +31,9 @@ internal class SyncMigrationFileService : ISyncMigrationFileService
     public SyncMigrationFileService(
         IWebHostEnvironment webHostEnvironment,
         IHostingEnvironment hostingEnvironment,
-        uSyncService uSyncService,
-        SyncFileService syncFileService,
-        uSyncConfigService uSyncConfig,
+        ISyncService uSyncService,
+        ISyncFileService syncFileService,
+        uSyncOptions uSyncConfig,
         ISyncMigrationStatusService migrationStatusService)
     {
         _webHostEnvironment = webHostEnvironment;

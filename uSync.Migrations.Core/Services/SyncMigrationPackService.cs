@@ -5,11 +5,12 @@ using Microsoft.Extensions.Hosting;
 
 using Newtonsoft.Json;
 
-using Umbraco.Cms.Core.Configuration.Grid;
 using Umbraco.Cms.Core.Extensions;
 
 using uSync.BackOffice;
 using uSync.BackOffice.SyncHandlers;
+using uSync.BackOffice.SyncHandlers.Models;
+using uSync.Migrations.LegacyModels.Grid;
 
 namespace uSync.Migrations.Core.Services;
 
@@ -32,7 +33,7 @@ internal class SyncMigrationPackService : ISyncMigrationPackService
     private const string _uSyncFolder = "v9";
     private const string _siteFolder = "_site";
 
-    private readonly uSyncService _uSyncService;
+    private readonly ISyncService _uSyncService;
     private readonly IHostEnvironment _hostEnvironment;
     private readonly IGridConfig _gridConfig;
 
@@ -40,7 +41,7 @@ internal class SyncMigrationPackService : ISyncMigrationPackService
 
     public SyncMigrationPackService(
         IHostEnvironment hostEnvironment,
-        uSyncService uSyncService,
+        ISyncService uSyncService,
         IGridConfig gridConfig)
     {
         _hostEnvironment = hostEnvironment;
