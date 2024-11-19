@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<TargetFrameworks>net6.0;net7.0</TargetFrameworks>
@@ -8,10 +8,10 @@
 
 
 	<ItemGroup>
-		<PackageReference Include="Umbraco.Cms.Web.BackOffice" Version="[10.4,14)" />
-		<PackageReference Include="Umbraco.Cms.Web.Website" Version="[10.4,14)" />
-		<PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
-		<PackageReference Include="uSync.BackOffice" Version="10.3.2" />
+		<PackageReference Include="Umbraco.Cms.Web.BackOffice" />
+		<PackageReference Include="Umbraco.Cms.Web.Website" />
+		<PackageReference Include="Microsoft.SourceLink.GitHub" PrivateAssets="All" />
+		<PackageReference Include="uSync.BackOffice" />
 	</ItemGroup>
 
 
