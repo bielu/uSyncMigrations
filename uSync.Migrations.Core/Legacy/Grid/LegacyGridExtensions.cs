@@ -1,4 +1,4 @@
-﻿using Umbraco.Cms.Core.Configuration.Grid;
+﻿using uSync.Migrations.LegacyModels.Grid;
 
 namespace uSync.Migrations.Core.Legacy.Grid;
 internal static class LegacyGridExtensions

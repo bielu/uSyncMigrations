@@ -4,7 +4,6 @@ using Microsoft.Extensions.DependencyInjection;
 
 using Umbraco.Cms.Core.Composing;
 using Umbraco.Cms.Core.DependencyInjection;
-using Umbraco.Cms.Web.BackOffice.Authorization;
 
 using uSync.Migrations.Core.Configuration;
 using uSync.Migrations.Core.Configuration.Models;
@@ -76,8 +75,8 @@ public static class SyncMigrationsBuilderExtensions
         builder.Services.AddOptions<uSyncMigrationOptions>().Configure<IConfiguration>((settings, configuration)
             => configuration.GetSection(uSyncMigrationOptions.Section).Bind(settings));
 
-        if (builder.ManifestFilters().Has<SyncMigrationsManifestFilter>() == false)
-            builder.ManifestFilters().Append<SyncMigrationsManifestFilter>();
+        // if (builder.ManifestFilters().Has<SyncMigrationsManifestFilter>() == false)
+        //     builder.ManifestFilters().Append<SyncMigrationsManifestFilter>();
 
         return builder;
     }
@@ -89,7 +88,7 @@ public static class SyncMigrationsBuilderExtensions
             policy =>
             {
                 policy.AuthenticationSchemes.Add(backOfficeAuthorizationScheme);
-                policy.Requirements.Add(new TreeRequirement(uSyncMigrations.TreeName));
+                // policy.Requirements.Add(new TreeRequirement(uSyncMigrations.TreeName));
             });
     }
 }

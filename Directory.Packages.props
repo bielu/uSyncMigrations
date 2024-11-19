@@ -4,14 +4,18 @@
     <CentralPackageTransitivePinningEnabled>false</CentralPackageTransitivePinningEnabled>
   </PropertyGroup>
   <ItemGroup>
-    <PackageVersion Include="coverlet.collector" Version="3.0.2" />
-    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.1.0" />
-    <PackageVersion Include="Microsoft.SourceLink.GitHub" Version="1.0.0" />
-    <PackageVersion Include="NUnit" Version="3.13.3" />
-    <PackageVersion Include="NUnit3TestAdapter" Version="3.17.0" />
-    <PackageVersion Include="Umbraco.Cms.Tests" Version="10.4.0" />
-    <PackageVersion Include="Umbraco.Cms.Tests.Integration" Version="10.4.0" />
-    <PackageVersion Include="Umbraco.Cms.Web.BackOffice" Version="10.4.0" />
-    <PackageVersion Include="uSync.BackOffice" Version="10.3.2" />
+    <PackageVersion Include="coverlet.collector" Version="6.0.2">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageVersion>
+    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.12.0" />
+    <PackageVersion Include="Microsoft.SourceLink.GitHub" Version="8.0.0" />
+    <PackageVersion Include="NUnit" Version="4.2.2" />
+    <PackageVersion Include="NUnit3TestAdapter" Version="4.6.0" />
+    <PackageVersion Include="Umbraco.Cms.Tests" Version="15.0.0" />
+    <PackageVersion Include="Umbraco.Cms.Tests" Version="15.0.0" />
+    <PackageVersion Include="Umbraco.Cms.Web.Website" Version="15.0.0" />
+    <PackageVersion Include="uSync.BackOffice" Version="15.0.1" />
+    <PackageVersion Include="uSync.Core" Version="15.0.1" />
   </ItemGroup>
 </Project>

@@ -3,6 +3,8 @@ using Umbraco.Cms.Core.Models;
 using Umbraco.Extensions;
 
 using uSync.Migrations.Core.Legacy.Grid;
+using uSync.Migrations.LegacyModels.Grid;
+
 namespace uSync.Migrations.Migrators.BlockGrid.BlockMigrators;
 public interface ISyncBlockMigrator
 {

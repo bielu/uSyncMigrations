@@ -9,6 +9,7 @@ using Umbraco.Extensions;
 using uSync.Migrations.Core.Context;
 using uSync.Migrations.Core.Migrators;
 using uSync.Migrations.Core.Migrators.Models;
+using uSync.Migrations.LegacyModels.Grid;
 
 namespace MyMigrations.DTGEMigrator;
 

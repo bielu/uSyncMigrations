@@ -1,8 +1,7 @@
 ﻿using Newtonsoft.Json;
 
-using Umbraco.Cms.Core.Configuration.Grid;
-
 using uSync.Migrations.Core.Context;
+using uSync.Migrations.LegacyModels.Grid;
 
 namespace uSync.Migrations.Core.Legacy.Grid;
 

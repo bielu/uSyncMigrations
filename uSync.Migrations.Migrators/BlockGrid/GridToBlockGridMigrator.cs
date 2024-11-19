@@ -9,7 +9,7 @@ using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Cms.Core.Strings;
 
 using uSync.Migrations.Core.Legacy.Grid;
-
+using uSync.Migrations.LegacyModels.Grid;
 using uSync.Migrations.Migrators.BlockGrid.BlockMigrators;
 using uSync.Migrations.Migrators.BlockGrid.Config;
 using uSync.Migrations.Migrators.BlockGrid.Content;

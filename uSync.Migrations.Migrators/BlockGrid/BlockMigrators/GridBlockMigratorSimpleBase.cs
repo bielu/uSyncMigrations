@@ -3,6 +3,7 @@ using Umbraco.Cms.Core.Strings;
 using Umbraco.Extensions;
 
 using uSync.Migrations.Core.Legacy.Grid;
+using uSync.Migrations.LegacyModels.Grid;
 using uSync.Migrations.Migrators.BlockGrid.Extensions;
 
 namespace uSync.Migrations.Migrators.BlockGrid.BlockMigrators;
