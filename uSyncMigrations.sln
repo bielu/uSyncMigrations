@@ -22,6 +22,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "uSync.Migrations.LegacyModels", "uSync.Migrations.LegacyModels\uSync.Migrations.LegacyModels.csproj", "{72171DB4-2382-465D-B421-7507F0AEE68D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "uSync.Migrations.Backoffice.Assets", "uSync.Migrations.Backoffice.Assets\uSync.Migrations.Backoffice.Assets.csproj", "{3D742D0A-4DC1-4A35-AEE6-B76D8676A29E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -56,6 +58,10 @@ Global
 		{72171DB4-2382-465D-B421-7507F0AEE68D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{72171DB4-2382-465D-B421-7507F0AEE68D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{72171DB4-2382-465D-B421-7507F0AEE68D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3D742D0A-4DC1-4A35-AEE6-B76D8676A29E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3D742D0A-4DC1-4A35-AEE6-B76D8676A29E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3D742D0A-4DC1-4A35-AEE6-B76D8676A29E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3D742D0A-4DC1-4A35-AEE6-B76D8676A29E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

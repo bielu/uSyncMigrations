@@ -43,8 +43,7 @@ internal class ContentTypeBaseMigrationHandler<TEntity> : SharedContentTypeBaseH
     /// </summary>
     protected override void UpdateInfoSection(XElement? info, XElement target, Guid key, SyncMigrationContext context)
     {
-        if (info == null) return;
-        var targetInfo = info.Clone();
+        var targetInfo = info?.Clone();
         if (targetInfo != null)
         {
             targetInfo.Element("Compositions")?.Elements("Composition").ForEach(c => c.Value = context.ContentTypes.GetReplacementAlias(c.Value));

@@ -10,7 +10,7 @@ using uSync.Migrations.Core.Extensions;
 
 namespace uSync.Migrations.Migrators.Core;
 
-[SyncMigrator(UmbEditors.Aliases.MediaPicker)]
+[SyncMigrator("Umbraco.MediaPicker")]
 [SyncMigrator("Umbraco.MediaPicker2")]
 [SyncMigrator(UmbEditors.Aliases.MultipleMediaPicker)]
 public class MediaPickerMigrator : SyncPropertyMigratorBase

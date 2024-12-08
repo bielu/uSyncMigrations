@@ -1,12 +1,9 @@
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-
 using Umbraco.Cms.Core;
 using Umbraco.Cms.Core.Models;
 using Umbraco.Cms.Core.Models.Blocks;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Extensions;
-
 using uSync.Migrations.Migrators.Community.Archetype.Models;
 
 namespace uSync.Migrations.Migrators.Community.Archetype;
@@ -28,7 +25,7 @@ public class ArchetypeToBlockListMigrator : SyncPropertyMigratorBase
     public override string GetDatabaseType(SyncMigrationDataTypeProperty dataTypeProperty, SyncMigrationContext context)
         => nameof(ValueStorageType.Ntext);
 
-    public override object? GetConfigValues(SyncMigrationDataTypeProperty dataTypeProperty, SyncMigrationContext context)
+    public override object GetConfigValues(SyncMigrationDataTypeProperty dataTypeProperty, SyncMigrationContext context)
     {
         var config = new BlockListConfiguration();
         var configPreValue = dataTypeProperty.PreValues?.FirstOrDefault(p => p.Alias == "archetypeConfig")?.Value;
@@ -46,9 +43,11 @@ public class ArchetypeToBlockListMigrator : SyncPropertyMigratorBase
             Max = archetypeConfiguration.MaxFieldsets == default ? null : archetypeConfiguration.MaxFieldsets,
             Min = archetypeConfiguration.MinFieldsets == default ? null : archetypeConfiguration.MinFieldsets,
         };
-        config.UseSingleBlockMode = archetypeConfiguration.MaxFieldsets == 1 && archetypeConfiguration.MinFieldsets == 1 && archetypeConfiguration.Fieldsets.Count() == 1;
-        config.UseLiveEditing = true;
-        config.UseInlineEditingAsDefault = true;
+        config.UseSingleBlockMode = archetypeConfiguration.MaxFieldsets == 1 &&
+                                    archetypeConfiguration.MinFieldsets == 1 &&
+                                    archetypeConfiguration.Fieldsets.Count() == 1;
+        // config.UseLiveEditing = true;
+        //  config.UseInlineEditingAsDefault = true; //todo: figure out live editing/inline editing
 
         var blocks = new List<BlockListConfiguration.BlockConfiguration>();
 
@@ -82,11 +81,13 @@ public class ArchetypeToBlockListMigrator : SyncPropertyMigratorBase
                             alias: p.Alias!,
                             name: p.Label ?? p.Alias!,
                             dataTypeAlias: dataType.DataTypeName,
-                            orginalEditorAlias: string.IsNullOrWhiteSpace(p.PropertyEditorAlias) ? dataType.OriginalEditorAlias : p.PropertyEditorAlias);
+                            orginalEditorAlias: string.IsNullOrWhiteSpace(p.PropertyEditorAlias)
+                                ? dataType.OriginalEditorAlias
+                                : p.PropertyEditorAlias);
                     })
                     .WhereNotNull()
                     .ToList();
-            };
+            }
 
             context.ContentTypes.AddNewContentType(newContentType);
             context.ContentTypes.AddAliasAndKey(newContentType.Alias, newContentType.Key);
@@ -95,7 +96,7 @@ public class ArchetypeToBlockListMigrator : SyncPropertyMigratorBase
             blocks.Add(new BlockListConfiguration.BlockConfiguration
             {
                 ContentElementTypeKey = newContentType.Key,
-                Label = fieldSet.LabelTemplate,
+                // Label = fieldSet.LabelTemplate, //todo: figure out labels
             });
         }
 
@@ -104,22 +105,23 @@ public class ArchetypeToBlockListMigrator : SyncPropertyMigratorBase
         return config;
     }
 
-    public override string? GetContentValue(SyncMigrationContentProperty contentProperty, SyncMigrationContext context)
+    public override string GetContentValue(SyncMigrationContentProperty contentProperty, SyncMigrationContext context)
     {
         if (string.IsNullOrWhiteSpace(contentProperty?.Value))
         {
             return string.Empty;
         }
 
-        var archetype = JsonConvert.DeserializeObject<ArchetypeModel>(contentProperty.Value, new JsonSerializerSettings() { DateParseHandling = DateParseHandling.None });
+        var archetype = JsonConvert.DeserializeObject<ArchetypeModel>(contentProperty.Value,
+            new JsonSerializerSettings() { DateParseHandling = DateParseHandling.None });
         if (archetype == null)
         {
             return string.Empty;
         }
 
-        var items = archetype.Fieldsets?.Where(f => !f.Disabled);
+        var items = archetype.Fieldsets?.Where(f => !f.Disabled).ToList();
 
-        if (items?.Any() != true)
+        if (items == null || items.Count == 0)
         {
             return string.Empty;
         }
@@ -138,7 +140,8 @@ public class ArchetypeToBlockListMigrator : SyncPropertyMigratorBase
             {
                 if (string.IsNullOrEmpty(property.Alias)) continue;
 
-                var editorAlias = context.ContentTypes.GetEditorAliasByTypeAndProperty(blockElementAlias, property.Alias);
+                var editorAlias =
+                    context.ContentTypes.GetEditorAliasByTypeAndProperty(blockElementAlias, property.Alias);
                 if (editorAlias is null) continue;
 
                 var migrator = context.Migrators.TryGetMigrator(editorAlias.OriginalEditorAlias);
@@ -162,11 +165,21 @@ public class ArchetypeToBlockListMigrator : SyncPropertyMigratorBase
             var block = new BlockItemData
             {
                 ContentTypeKey = key,
+#pragma warning disable CS0618 // Type or member is obsolete
                 Udi = Udi.Create(UmbConstants.UdiEntityType.Element, item.Id),
+#pragma warning restore CS0618 // Type or member is obsolete
+                Key = item.Id,
                 RawPropertyValues = rawValues,
             };
 
-            layout.Add(new BlockListLayoutItem { ContentUdi = block.Udi });
+            layout.Add(new BlockListLayoutItem
+            {
+#pragma warning disable CS0618 // Type or member is obsolete
+                ContentUdi = block.Udi,
+#pragma warning restore CS0618 // Type or member is obsolete
+
+                ContentKey = block.Key,
+            });
 
             contentData.Add(block);
         }
@@ -176,12 +189,12 @@ public class ArchetypeToBlockListMigrator : SyncPropertyMigratorBase
             return string.Empty;
         }
 
-        var model = new BlockValue
+        var model = new BlockListValue
         {
             ContentData = contentData,
-            Layout = new Dictionary<string, JToken>
+            Layout = new Dictionary<string, IEnumerable<IBlockLayoutItem>>
             {
-                { UmbConstants.PropertyEditors.Aliases.BlockList, JArray.FromObject(layout) },
+                { UmbConstants.PropertyEditors.Aliases.BlockList, layout },
             },
         };
 

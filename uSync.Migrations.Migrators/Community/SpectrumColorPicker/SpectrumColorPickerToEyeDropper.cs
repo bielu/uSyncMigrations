@@ -34,7 +34,7 @@ public class SpectrumColorPickerToEyeDropper : SyncPropertyMigratorBase
     public override object? GetConfigValues(SyncMigrationDataTypeProperty dataTypeProperty,
         SyncMigrationContext context)
     {
-        var config = new EyeDropperColorPickerConfiguration();
+        var config = new EyeDropperColorPickerPropertyEditor();
 
         var mappings = new Dictionary<string, string>
         {

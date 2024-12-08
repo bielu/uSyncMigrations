@@ -4,6 +4,7 @@ using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Extensions;
 
 using uSync.Migrations.Core.Extensions;
+using uSync.Migrations.LegacyModels.NestedContent;
 
 namespace uSync.Migrations.Migrators.Core;
 

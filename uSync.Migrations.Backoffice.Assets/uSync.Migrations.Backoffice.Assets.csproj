@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net9.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+
+        <StaticWebAssetBasePath>/</StaticWebAssetBasePath>
+
+        <RootNamespace>uSync.Migrations.Backoffice.Assets</RootNamespace>
+
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Umbraco.Cms.Core" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\uSync.Migrations.Backoffice.Managment.Api\uSync.Migrations.Backoffice.Managment.Api.csproj" />
+    </ItemGroup>
+</Project>

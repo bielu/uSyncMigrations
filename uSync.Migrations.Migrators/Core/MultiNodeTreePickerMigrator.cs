@@ -26,11 +26,11 @@ public class MultiNodeTreePickerMigrator : SyncPropertyMigratorBase
 
         var mappings = new Dictionary<string, string>
         {
-            { "filter", nameof(config.Filter) },
+           // { "filter", nameof(config.Filter) }, todo: figure out where it moved
             { "ignoreUserStartNodes", nameof(config.IgnoreUserStartNodes) },
             { "minNumber", nameof(config.MinNumber) },
             { "maxNumber", nameof(config.MaxNumber) },
-            { "showOpenButton", nameof(config.ShowOpen) },
+          //  { "showOpenButton", nameof(config.ShowOpen) },  todo: figure out where it moved
             { "startNode", nameof(config.TreeSource) },
         };
 

@@ -98,7 +98,7 @@ public class NestedToBlockListMigrator : SyncPropertyMigratorBase
                 blocks.Add(new BlockListConfiguration.BlockConfiguration
                 {
                     ContentElementTypeKey = contentTypeKey,
-                    Label = item.Template
+                   // Label = item.Template //todo: figure out labels
                 });
             }
 

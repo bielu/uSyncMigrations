@@ -7,7 +7,7 @@
 
 		<StaticWebAssetBasePath>/</StaticWebAssetBasePath>
 
-		<RootNamespace>uSync.Migrations.Client</RootNamespace>
+		<RootNamespace>uSync.Migrations.Backoffice.Managment.Api</RootNamespace>
 
 	</PropertyGroup>
 

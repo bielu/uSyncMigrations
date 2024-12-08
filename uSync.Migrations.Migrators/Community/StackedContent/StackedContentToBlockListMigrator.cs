@@ -36,7 +36,7 @@ public class StackedContentToBlockListMigrator : SyncPropertyMigratorBase
             .Select(x => new BlockListConfiguration.BlockConfiguration
             {
                 ContentElementTypeKey = !string.IsNullOrWhiteSpace(x.ContentTypeAlias) ? context.ContentTypes.GetKeyByAlias(x.ContentTypeAlias) : x.ContentTypeKey,
-                Label = x.NameTemplate,
+             //   Label = x.NameTemplate, //todo: figure out how do labels in v15?
             })
             .ToArray();
 
@@ -121,12 +121,12 @@ public class StackedContentToBlockListMigrator : SyncPropertyMigratorBase
             return string.Empty;
         }
 
-        var model = new BlockValue
+        var model = new BlockListValue()
         {
             ContentData = contentData,
-            Layout = new Dictionary<string, JToken>
+            Layout = new Dictionary<string, IEnumerable<IBlockLayoutItem>>
             {
-                { UmbConstants.PropertyEditors.Aliases.BlockList, JArray.FromObject(layout) },
+                { UmbConstants.PropertyEditors.Aliases.BlockList, layout },
             },
         };
 

@@ -6,6 +6,8 @@ using Newtonsoft.Json.Linq;
 using Umbraco.Cms.Core.Models;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Extensions;
+using uSync.Migrations.LegacyModels.Grid;
+using uSync.Migrations.Migrators.BlockGrid.Models;
 
 namespace uSync.Migrations.Migrators.Core;
 

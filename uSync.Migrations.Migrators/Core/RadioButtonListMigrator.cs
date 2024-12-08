@@ -17,11 +17,7 @@ public class RadioButtonListMigrator : SyncPropertyMigratorBase
         {
             foreach (var item in dataTypeProperty.PreValues.OrderBy(x => x.SortOrder))
             {
-                config.Items.Add(new ValueListConfiguration.ValueListItem
-                {
-                    Id = int.TryParse(item.Alias, out var id) == true ? id : item.SortOrder,
-                    Value = item.Value
-                });
+                config.Items.Add(item.Value);
             }
 
             context.Migrators.AddCustomValues(
