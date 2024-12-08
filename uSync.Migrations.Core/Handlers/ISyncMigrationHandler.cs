@@ -15,8 +15,8 @@ public interface ISyncMigrationHandler : IDiscoverable
 
     public int Priority { get; }
 
-    public void PrepareMigrations(SyncMigrationContext context);
+    public Task PrepareMigrationsAsync(SyncMigrationContext context);
 
-    public IEnumerable<MigrationMessage> DoMigration(SyncMigrationContext context);
+    public Task<IEnumerable<MigrationMessage>> DoMigrationAsync(SyncMigrationContext context);
 }
 

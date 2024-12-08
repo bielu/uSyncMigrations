@@ -7,11 +7,18 @@
 
 		<StaticWebAssetBasePath>/</StaticWebAssetBasePath>
 
+		<RootNamespace>uSync.Migrations.Client</RootNamespace>
+
 	</PropertyGroup>
 
 
 	<ItemGroup>
 		<ProjectReference Include="..\uSync.Migrations.Core\uSync.Migrations.Core.csproj" />
+	</ItemGroup>
+
+
+	<ItemGroup>
+	  <PackageReference Include="uSync.Backoffice.Management.Api" />
 	</ItemGroup>
 
 </Project>

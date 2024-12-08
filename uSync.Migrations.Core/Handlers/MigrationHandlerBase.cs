@@ -79,7 +79,7 @@ internal abstract class MigrationHandlerBase<TObject>
             .ToList();
     }
 
-    public virtual void PrepareMigrations(SyncMigrationContext context)
+    public virtual async Task PrepareMigrationsAsync(SyncMigrationContext context)
     {
         Stopwatch sw = Stopwatch.StartNew();
 
@@ -110,12 +110,12 @@ internal abstract class MigrationHandlerBase<TObject>
     // for global prepare stuff. 
     public virtual void Prepare(SyncMigrationContext context) { }
 
-    public virtual IEnumerable<MigrationMessage> DoMigration(SyncMigrationContext context)
+    public virtual async Task<IEnumerable<MigrationMessage>> DoMigrationAsync(SyncMigrationContext context)
     {
         var messages = new List<MigrationMessage>();
-        messages.AddRange(PreDoMigration(context));
-        messages.AddRange(MigrateFolder(GetSourceFolder(context.Metadata.SourceFolder), 0, context));
-        messages.AddRange(PostDoMigration(context));
+        messages.AddRange(await PreDoMigrationAsync(context));
+        messages.AddRange(await MigrateFolderAsync(GetSourceFolder(context.Metadata.SourceFolder), 0, context));
+        messages.AddRange(await PostDoMigrationAsync(context));
         return messages;
     }
 
@@ -124,16 +124,16 @@ internal abstract class MigrationHandlerBase<TObject>
     /// </summary>
     /// <param name="context"></param>
     /// <returns></returns>
-    protected virtual IEnumerable<MigrationMessage> PreDoMigration(SyncMigrationContext context)
-        => Enumerable.Empty<MigrationMessage>();
+    protected virtual Task<IEnumerable<MigrationMessage>> PreDoMigrationAsync(SyncMigrationContext context)
+        => Task.FromResult(Enumerable.Empty<MigrationMessage>());
 
     /// <summary>
     ///  So Handlers can run things post main DoMigrationLoop
     /// </summary>
     /// <param name="context"></param>
     /// <returns></returns>
-    protected virtual IEnumerable<MigrationMessage> PostDoMigration(SyncMigrationContext context)
-        => Enumerable.Empty<MigrationMessage>();
+    protected virtual Task<IEnumerable<MigrationMessage>> PostDoMigrationAsync(SyncMigrationContext context)
+        => Task.FromResult(Enumerable.Empty<MigrationMessage>());
 
     /// <summary>
     ///  migrate a folder 
@@ -141,7 +141,7 @@ internal abstract class MigrationHandlerBase<TObject>
     /// <remarks>
     ///  We have to do it like this for v7 because it did level by folder structure.
     /// </remarks>
-    private IEnumerable<MigrationMessage> MigrateFolder(string folder, int level, SyncMigrationContext context)
+    private async Task<IEnumerable<MigrationMessage>> MigrateFolderAsync(string folder, int level, SyncMigrationContext context)
     {
         if (Directory.Exists(folder) == false)
         {
@@ -170,7 +170,7 @@ internal abstract class MigrationHandlerBase<TObject>
                 if (context.IsBlocked(ItemType, alias)) continue;
 
                 var migratingNotification = new SyncMigratingNotification<TObject>(source, context);
-                if (_eventAggregator.PublishCancelable(migratingNotification) == true)
+                if (await _eventAggregator.PublishCancelableAsync(migratingNotification) == true)
                 {
                     continue;
                 }
@@ -182,7 +182,7 @@ internal abstract class MigrationHandlerBase<TObject>
                 if (target != null)
                 {
                     var migratedNotification = new SyncMigratedNotification<TObject>(target, context).WithStateFrom(migratingNotification);
-                    _eventAggregator.Publish(migratedNotification);
+                  await  _eventAggregator.PublishAsync(migratedNotification);
                     messages.Add(SaveTargetXml(context.Metadata.MigrationId, target));
                 }
             }
@@ -204,7 +204,7 @@ internal abstract class MigrationHandlerBase<TObject>
 
         foreach (var childFolder in Directory.GetDirectories(folder))
         {
-            messages.AddRange(MigrateFolder(childFolder, level + 1, context));
+            messages.AddRange(await MigrateFolderAsync(childFolder, level + 1, context));
         }
 
         return messages;

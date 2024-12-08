@@ -24,7 +24,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\uSync.Migrations.Client\uSync.Migrations.Client.csproj" />
+		<ProjectReference Include="..\uSync.Migrations.Backoffice.Managment.Api\uSync.Migrations.Backoffice.Managment.Api.csproj" />
 		<ProjectReference Include="..\uSync.Migrations.Core\uSync.Migrations.Core.csproj" />
 		<ProjectReference Include="..\uSync.Migrations.Migrators\uSync.Migrations.Migrators.csproj" />
 	</ItemGroup>

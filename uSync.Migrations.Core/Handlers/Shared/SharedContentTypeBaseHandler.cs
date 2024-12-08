@@ -254,10 +254,10 @@ internal abstract class SharedContentTypeBaseHandler<TEntity> : SharedHandlerBas
     /// </summary>
     /// <param name="context"></param>
     /// <returns></returns>
-	protected override IEnumerable<MigrationMessage> PreDoMigration(SyncMigrationContext context)
+	protected override async Task<IEnumerable<MigrationMessage>> PreDoMigrationAsync(SyncMigrationContext context)
     {
         var messages = new List<MigrationMessage>();
-        messages.AddRange(base.PreDoMigration(context));
+        messages.AddRange(await base.PreDoMigrationAsync(context));
         messages.AddRange(CreateAdditional(context));
         return messages;
     }

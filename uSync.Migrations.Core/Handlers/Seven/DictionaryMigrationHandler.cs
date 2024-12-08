@@ -1,12 +1,9 @@
 ﻿using System.Xml.Linq;
-
 using Microsoft.Extensions.Logging;
-
 using Umbraco.Cms.Core.Events;
 using Umbraco.Cms.Core.Models;
 using Umbraco.Cms.Core.Notifications;
 using Umbraco.Extensions;
-
 using uSync.Core;
 using uSync.Migrations.Core.Context;
 using uSync.Migrations.Core.Handlers.Shared;
@@ -27,13 +24,14 @@ internal class DictionaryMigrationHandler : SharedHandlerBase<DictionaryItem>, I
         ISyncMigrationFileService migrationFileService,
         ILogger<DictionaryMigrationHandler> logger)
         : base(eventAggregator, migrationFileService, logger)
-    { }
+    {
+    }
 
     /// <summary>
     ///  not actually called for a dictionary item, see DoMigration below.
     /// </summary>
     protected override XElement? MigrateFile(XElement source, int level, SyncMigrationContext context)
-         => null;
+        => null;
 
     protected override (string alias, Guid key) GetAliasAndKey(XElement source, SyncMigrationContext? context)
         => (
@@ -44,7 +42,7 @@ internal class DictionaryMigrationHandler : SharedHandlerBase<DictionaryItem>, I
     /// <summary>
     ///  dictionary splits a single XElement into multiple, so it is slightly diferent from the rest.
     /// </summary>
-    public override IEnumerable<MigrationMessage> DoMigration(SyncMigrationContext context)
+    public override async Task<IEnumerable<MigrationMessage>> DoMigrationAsync(SyncMigrationContext context)
     {
         var files = GetSourceFiles(context.Metadata.SourceFolder);
         if (files == null)
@@ -59,7 +57,7 @@ internal class DictionaryMigrationHandler : SharedHandlerBase<DictionaryItem>, I
             var source = XElement.Load(file);
 
             var migratingNotification = new SyncMigratingNotification<DictionaryItem>(source, context);
-            if (_eventAggregator.PublishCancelable(migratingNotification) == true)
+            if (await _eventAggregator.PublishCancelableAsync(migratingNotification) == true)
             {
                 continue;
             }
@@ -70,8 +68,10 @@ internal class DictionaryMigrationHandler : SharedHandlerBase<DictionaryItem>, I
             {
                 foreach (var target in targets)
                 {
-                    var migratedNotification = new SyncMigratedNotification<DictionaryItem>(target, context).WithStateFrom(migratingNotification);
-                    _eventAggregator.Publish(migratedNotification);
+                    var migratedNotification =
+                        new SyncMigratedNotification<DictionaryItem>(target, context).WithStateFrom(
+                            migratingNotification);
+                    await _eventAggregator.PublishAsync(migratedNotification);
                     messages.Add(SaveTargetXml(context.Metadata.MigrationId, target));
                 }
             }

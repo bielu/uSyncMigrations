@@ -9,14 +9,12 @@ using Umbraco.Cms.Core.Services;
 using Umbraco.Cms.Core.Trees;
 using Umbraco.Cms.Web.BackOffice.Trees;
 using Umbraco.Extensions;
+using uSync.Backoffice.Management.Api.Controllers;
 
 namespace uSync.Migrations.Client.Controllers;
 
-[Tree(UmbConstants.Applications.Settings,
-    "uSyncFiles",
-    TreeTitle = "uSync Files",
-    TreeUse = TreeUse.Dialog)]
-public class uSyncFilesTreeController : TreeController
+[ApiExplorerSettings(GroupName = "uSync Files")]
+public class uSyncFilesTreeController : uSyncControllerBase 
 {
     private readonly IFileSystem _fileSystem;
     private readonly IMenuItemCollectionFactory _menuItemCollectionFactory;

@@ -16,6 +16,7 @@
     <PackageVersion Include="Umbraco.Cms.Tests" Version="15.0.0" />
     <PackageVersion Include="Umbraco.Cms.Web.Website" Version="15.0.0" />
     <PackageVersion Include="uSync.BackOffice" Version="15.0.1" />
+    <PackageVersion Include="uSync.Backoffice.Management.Api" Version="15.0.1" />
     <PackageVersion Include="uSync.Core" Version="15.0.1" />
   </ItemGroup>
 </Project>

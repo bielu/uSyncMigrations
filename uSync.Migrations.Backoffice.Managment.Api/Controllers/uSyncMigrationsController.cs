@@ -7,13 +7,16 @@ using Microsoft.AspNetCore.SignalR;
 
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
-
+using Umbraco.Cms.Api.Management.Controllers;
+using Umbraco.Cms.Api.Management.Routing;
 using Umbraco.Cms.Core.Strings;
 using Umbraco.Cms.Web.BackOffice.Controllers;
+using Umbraco.Cms.Web.Common.Controllers;
 using Umbraco.Extensions;
 
 using uSync.BackOffice;
 using uSync.BackOffice.Hubs;
+using uSync.BackOffice.Models;
 using uSync.BackOffice.Services;
 using uSync.Migrations.Core;
 using uSync.Migrations.Core.Configuration;
@@ -24,9 +27,10 @@ using uSync.Migrations.Core.Services;
 
 namespace uSync.Migrations.Client.Controllers;
 
-
 [Authorize(Policy = uSyncMigrationsAuthorizationPolicies.MigrationsTreeAccess)]
-public class uSyncMigrationsController : UmbracoAuthorizedApiController
+[VersionedApiBackOfficeRoute("my/item")]
+[ApiExplorerSettings(GroupName = "My item API")]
+public class uSyncMigrationsController : ManagementApiControllerBase
 {
     private readonly IShortStringHelper _shortStringHelper;
 
@@ -37,7 +41,7 @@ public class uSyncMigrationsController : UmbracoAuthorizedApiController
 
     private readonly ISyncMigrationPackService _packService;
 
-    private readonly uSyncService _uSyncService;
+    private readonly ISyncService _uSyncService;
     private readonly IHubContext<SyncHub> _hubContext;
     private readonly SyncFileService _syncFileService;
     private readonly string _tempPath;
@@ -47,7 +51,7 @@ public class uSyncMigrationsController : UmbracoAuthorizedApiController
         ISyncMigrationService migrationService,
         ISyncMigrationConfigurationService profileConfigService,
         IWebHostEnvironment webHostEnvironment,
-        uSyncService uSyncService,
+        ISyncService uSyncService,
         SyncFileService syncFileService,
         ISyncMigrationFileService migrationFileService,
         IShortStringHelper shortStringHelper,
@@ -122,7 +126,7 @@ public class uSyncMigrationsController : UmbracoAuthorizedApiController
 
             try
             {
-                _uSyncService.DeCompressFile(tempFile, tempFolder);
+                _uSyncService.DeCompressFile(tefilepFile, tempFolder);
 
                 var status = _migrationStatusService.CreateStatus(tempFolder);
                 if (status != null)

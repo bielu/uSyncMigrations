@@ -63,7 +63,7 @@ internal class SyncMigrationService : ISyncMigrationService
         return result;
     }
 
-    public IEnumerable<ISyncMigrationHandler> GetHandlers(int version)
+    public IEnumerable<ISyncMigrationHandler>? GetHandlers(int version)
         => _migrationHandlers.Where(x => HandlerMatches(x, _options.Value, version));
 
     public int DetectVersion(string folder)
@@ -251,12 +251,15 @@ internal class SyncMigrationService : ISyncMigrationService
             .ForEach(kvp => context.ContentTypes.AddReplacementAlias(kvp.Key, kvp.Value));
 
         context.SendUpdate("Preparing Migration handlers", 5,10);
-
+        if (GetHandlers(options.SourceVersion) == null)
+        {
+            return context;
+        }
         // let the handlers run through their prep (populate all the lookups)
-        GetHandlers(options.SourceVersion)?
-            .OrderBy(x => x.Priority)
-            .ToList()
-            .ForEach(x => x.PrepareMigrations(context));
+       Task.WaitAll( GetHandlers(options.SourceVersion)
+           .OrderBy(x => x.Priority)
+           .ToList()
+           .Select(x => x.PrepareMigrationsAsync(context)));
 
         return context;
     }

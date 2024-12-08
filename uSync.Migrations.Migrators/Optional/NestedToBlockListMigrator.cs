@@ -9,6 +9,7 @@ using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Extensions;
 
 using uSync.Migrations.Core.Extensions;
+using uSync.Migrations.LegacyModels.NestedContent;
 using uSync.Migrations.Migrators.Core;
 
 using static Umbraco.Cms.Core.Constants;
@@ -131,7 +132,7 @@ public class NestedToBlockListMigrator : SyncPropertyMigratorBase
         var rowValues = JsonConvert.DeserializeObject<IList<NestedContentRowValue>>(contentProperty.Value, new JsonSerializerSettings() { DateParseHandling = DateParseHandling.None });
         if (rowValues == null) return string.Empty;
 
-        var blockValue = new BlockValue();
+        var blockValue = new BlockListValue();
         var contentData = new List<BlockItemData>();
         var blockListLayout = new List<BlockListLayoutItem>();
 
@@ -186,9 +187,9 @@ public class NestedToBlockListMigrator : SyncPropertyMigratorBase
         }
 
         blockValue.ContentData = contentData;
-        blockValue.Layout = new Dictionary<string, JToken>()
+        blockValue.Layout = new Dictionary<string, IEnumerable<IBlockLayoutItem>>()
         {
-            { "Umbraco.BlockList", JToken.FromObject(blockListLayout) }
+            { "Umbraco.BlockList", blockListLayout }
         };
 
         return JsonConvert.SerializeObject(blockValue, Formatting.Indented);
