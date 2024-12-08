@@ -20,9 +20,9 @@ public class RadioButtonListMigrator : SyncPropertyMigratorBase
                 config.Items.Add(item.Value);
             }
 
-            context.Migrators.AddCustomValues(
-                $"dataType_{dataTypeProperty.DataTypeAlias}_items",
-                config.Items.ToDictionary(x => x.Id.ToString(), x => (object)x.Value!));
+            // context.Migrators.AddCustomValues(
+            //     $"dataType_{dataTypeProperty.DataTypeAlias}_items",
+            //     config.Items.ToDictionary(x => x.Id.ToString(), x => (object)x.Value!));
         }
 
         return config;

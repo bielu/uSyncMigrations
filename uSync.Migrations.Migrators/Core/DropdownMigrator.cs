@@ -28,11 +28,7 @@ public class DropdownMigrator : SyncPropertyMigratorBase
             }
             else
             {
-                config.Items.Add(new ValueListConfiguration.ValueListItem
-                {
-                    Id = index,
-                    Value = preValue.Value
-                });
+                config.Items.Add(preValue.Value);
             }
             index++;
         }

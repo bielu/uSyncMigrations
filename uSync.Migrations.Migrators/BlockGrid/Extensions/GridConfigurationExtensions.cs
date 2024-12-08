@@ -1,15 +1,10 @@
 ﻿using System.Text.RegularExpressions;
-
 using Newtonsoft.Json.Linq;
-
 using Umbraco.Cms.Core.PropertyEditors;
-using Umbraco.Extensions;
-
 using uSync.Migrations.Core.Legacy.Grid;
 using uSync.Migrations.Migrators.BlockGrid.BlockMigrators;
 using uSync.Migrations.Migrators.BlockGrid.Models;
 
-using GridConfiguration = Umbraco.Cms.Core.PropertyEditors.GridConfiguration;
 
 namespace uSync.Migrations.Migrators.BlockGrid.Extensions;
 internal static class GridConfigurationExtensions
@@ -73,11 +68,11 @@ internal static class GridConfigurationExtensions
                 }
                 yield return new BlockGridConfiguration.BlockGridBlockConfiguration
                 {
-                    Label = editorConfig.GetBlockname(),
+                 //   Label = editorConfig.GetBlockname(), todo: figure out this
                     ContentElementTypeKey = elementKey,
-                    GroupKey = groupKey != Guid.Empty ? groupKey.ToString() : null,
-                    BackgroundColor = Grid.GridBlocks.Background,
-                    IconColor = Grid.GridBlocks.Icon
+                   // GroupKey = groupKey != Guid.Empty ? groupKey.ToString() : null, todo: figure out this
+                    //BackgroundColor = Grid.GridBlocks.Background, todo: figure out this
+                   // IconColor = Grid.GridBlocks.Icon todo: figure out this
                 };
             }
         }

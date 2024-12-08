@@ -112,13 +112,13 @@ internal class GridToBlockGridConfigLayoutBlockHelper
 
             var layoutBlock = new BlockGridConfiguration.BlockGridBlockConfiguration
             {
-                Label = template?.Name,
+                //Label = template?.Name, todo: fix later
                 Areas = areas.ToArray(),
                 AllowAtRoot = true,
                 ContentElementTypeKey = context.GetContentTypeKeyOrDefault(contentTypeAlias, contentTypeAlias.ToGuid()),
-                GroupKey = gridBlockContext.LayoutsGroup.Key.ToString(),
-                BackgroundColor = Grid.LayoutBlocks.Background,
-                IconColor = Grid.LayoutBlocks.Icon
+                // GroupKey = gridBlockContext.LayoutsGroup.Key.ToString(), todo: fix later
+                // BackgroundColor = Grid.LayoutBlocks.Background, todo: fix later
+                // IconColor = Grid.LayoutBlocks.Icon todo: fix later
             };
 
             gridBlockContext.LayoutBlocks.TryAdd(contentTypeAlias, layoutBlock);
@@ -187,13 +187,13 @@ internal class GridToBlockGridConfigLayoutBlockHelper
 
             var layoutBlock = new BlockGridConfiguration.BlockGridBlockConfiguration
             {
-                Label = layout?.Name,
+               // Label = layout?.Name, todo: fix later
                 Areas = rowAreas.ToArray(),
                 ContentElementTypeKey = context.GetContentTypeKeyOrDefault(contentTypeAlias, contentTypeAlias.ToGuid()),
                 SettingsElementTypeKey = context.GetContentTypeKeyOrDefault(settingsContentTypeAlias, settingsContentTypeAlias.ToGuid()),
-                GroupKey = gridBlockContext.LayoutsGroup.Key.ToString(),
-                BackgroundColor = Grid.LayoutBlocks.Background,
-                IconColor = Grid.LayoutBlocks.Icon,
+                // GroupKey = gridBlockContext.LayoutsGroup.Key.ToString(), todo: fix later
+                // BackgroundColor = Grid.LayoutBlocks.Background, todo: fix later
+                // IconColor = Grid.LayoutBlocks.Icon, todo: fix later
             };
 
             gridBlockContext.LayoutBlocks.TryAdd(contentTypeAlias, layoutBlock);
@@ -227,21 +227,21 @@ internal class GridToBlockGridConfigLayoutBlockHelper
                 var layoutContentTypeAliases = areaAllowed
                     .Select(x => _conventions.LayoutContentTypeAlias(x));
 
-                var specificedAllowance = new List<BlockGridConfiguration.BlockGridAreaConfigurationSpecifiedAllowance>(area.SpecifiedAllowance);
-
-                foreach (var layoutContentTypeAlias in layoutContentTypeAliases)
-                {
-                    var contentTypeKey = context.ContentTypes.GetKeyByAlias(layoutContentTypeAlias);
-                    if (contentTypeKey != Guid.Empty)
-                    {
-                        specificedAllowance.Add(new()
-                        {
-                            ElementTypeKey = contentTypeKey
-                        });
-                    }
-                }
-
-                area.SpecifiedAllowance = specificedAllowance.ToArray();
+                // var specificedAllowance = new List<BlockGridConfiguration.BlockGridAreaConfigurationSpecifiedAllowance>(area.SpecifiedAllowance); todo: figure this out 
+                //
+                // foreach (var layoutContentTypeAlias in layoutContentTypeAliases)
+                // {
+                //     var contentTypeKey = context.ContentTypes.GetKeyByAlias(layoutContentTypeAlias);
+                //     if (contentTypeKey != Guid.Empty)
+                //     {
+                //         specificedAllowance.Add(new()
+                //         {
+                //             ElementTypeKey = contentTypeKey
+                //         });
+                //     }
+                // }
+                //
+                // area.SpecifiedAllowance = specificedAllowance.ToArray();
             }
 
             if (block.ContentElementTypeKey == Guid.Empty)

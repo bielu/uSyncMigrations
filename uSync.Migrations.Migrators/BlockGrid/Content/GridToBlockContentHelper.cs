@@ -61,7 +61,7 @@ internal class GridToBlockContentHelper
 
         var gridColumns = sections.Sum(x => x.Grid);
 
-        var block = new BlockValue();
+        var block = new BlockGridValue();
 
         var blockLayouts = new List<BlockGridLayoutItem>();
 
@@ -171,9 +171,9 @@ internal class GridToBlockContentHelper
         }
 
         // end - process layouts into block format. 
-        block.Layout = new Dictionary<string, JToken>
+        block.Layout = new Dictionary<string, IEnumerable<IBlockLayoutItem>>
         {
-            { UmbConstants.PropertyEditors.Aliases.BlockGrid, JToken.FromObject(blockLayouts) }
+            { UmbConstants.PropertyEditors.Aliases.BlockGrid, blockLayouts }
         };
 
         _logger.LogDebug(">> {method}", nameof(ConvertToBlockValue));
